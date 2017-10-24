@@ -10,7 +10,11 @@
 /// For example: `product_range(4, 6) = 4 x 5 x 6 = 120`
 /// 
 fn product_range(from: u32, to: u32) -> u32 {
-    0
+    let mut product = 1;
+    for factor in from..(to+1) {
+        product = product * factor;
+    }
+    product
 }
 
 #[cfg(test)]
@@ -40,7 +44,14 @@ mod product_range_should {
 /// For example: `last_non_zero([5, 6, 0, 1, 3]) = 6`
 /// 
 fn last_non_zero(numbers: Vec<u32>) -> u32 {
-    0
+    let mut last = 0;
+    for number in numbers {
+        if number == 0 {
+            break;
+        }
+        last = number;
+    }
+    last
 }
 
 #[cfg(test)]
