@@ -1,5 +1,18 @@
 #![allow(dead_code)]
 
+#[derive(Debug, PartialEq, Eq)]
+struct TuplePoint(i64, i64);
+
+impl TuplePoint {
+    fn x(self) -> i64 {
+        self.0
+    }
+
+    fn y(self) -> i64 {
+        self.1
+    }
+}
+
 #[cfg(test)]
 mod tuple_point_should {
     use super::*;
@@ -44,6 +57,31 @@ mod tuple_point_should {
     #[test]
     fn consider_not_equal_1024_2048_against_4096_2048() {
         assert_ne!(TuplePoint(1024, 2048), TuplePoint(1024, 4096));
+    }
+}
+
+#[derive(Debug)]
+struct NamedPoint {
+    x: i64,
+    y: i64,
+    name: String,
+}
+
+impl NamedPoint {
+    fn new(x: i64, y: i64, name: &str) -> NamedPoint {
+        NamedPoint { x, y, name: String::from(name) }
+    }
+
+    fn copy(base: NamedPoint, name: &str) -> NamedPoint {
+        Self::new(base.x, base.y, name)
+    }
+
+    fn x(self) -> i64 {
+        self.x
+    }
+
+    fn y(self) -> i64 {
+        self.y
     }
 }
 
