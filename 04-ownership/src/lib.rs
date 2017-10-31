@@ -1,5 +1,8 @@
 #![allow(dead_code)]
 
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+struct Color { red: u8, green: u8, blue: u8, }
+
 #[cfg(test)]
 mod color_should {
     use super::*;
@@ -20,6 +23,24 @@ mod color_should {
 struct Car {
     brand: String,
     model: String,
+}
+
+impl Car {
+    fn brand(&self) -> &String {
+        &self.brand
+    }
+
+    fn model(&self) -> &String {
+        &self.model
+    }
+
+    fn set_brand(&mut self, brand: &str) {
+        self.brand = String::from(brand);
+    }
+
+    fn set_model(&mut self, model: &str) {
+        self.model = String::from(model);
+    }
 }
 
 #[cfg(test)]
@@ -46,6 +67,32 @@ mod car_should {
         car.set_model("A-Class");
         assert_eq!(String::from("Mercedes"), *car.brand());
         assert_eq!(String::from("A-Class"), *car.model());
+    }
+}
+
+struct CarBuilder {
+    brand: String,
+    model: String,
+}
+
+impl CarBuilder {
+    
+    fn new() -> Self {
+        CarBuilder { brand: String::new(), model: String::new(), }
+    }
+
+    fn brand(mut self, brand: &str) -> Self {
+        self.brand = String::from(brand);
+        self
+    }
+
+    fn model(mut self, model: &str) -> Self {
+        self.model = String::from(model);
+        self
+    }
+
+    fn build(&self) -> Car {
+        Car { brand: self.brand.clone(), model: self.model.clone() }
     }
 }
 
