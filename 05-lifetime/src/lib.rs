@@ -3,8 +3,12 @@
 ///
 /// _Note: May not work in all cases but must work if values are in same scope._
 /// 
-fn longest(first: &str, second: &str) -> &str {
-
+fn longest<'a>(first: &'a str, second: &'a str) -> &'a str {
+    if first.len() >= second.len() {
+        first
+    } else {
+        second
+    }
 }
 
 #[cfg(test)]
