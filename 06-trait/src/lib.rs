@@ -1,10 +1,34 @@
 #![allow(dead_code)]
 
+use std::fmt::Debug;
+trait Ident: Debug {
+  fn ident(&self) -> String;
+}
+
+trait Value {
+   type Output;
+   fn value(&self) -> Self::Output;
+}
+
 fn format(ident: &Ident) -> String {
     format!("[{:?}] {:?}", ident.ident(), ident)
 }
 
+#[derive(Debug)]
 struct Entity { id: u64, name: String, }
+
+impl Ident for Entity {
+    fn ident(&self) -> String {
+        self.id.to_string()
+    }
+}
+
+impl Value for Entity {
+    type Output = String;
+    fn value(&self) -> String {
+        self.name.clone()
+    }
+}
 
 #[cfg(test)]
 mod entity_should {
@@ -24,7 +48,21 @@ mod entity_should {
     }
 }
 
+#[derive(Debug)]
 struct Singleton;
+
+impl Ident for Singleton {
+    fn ident(&self) -> String {
+        String::from("S")
+    }
+}
+
+impl Value for Singleton {
+    type Output = ();
+    fn value(&self) -> () {
+        ()
+    }
+}
 
 #[cfg(test)]
 mod singleton_should {
