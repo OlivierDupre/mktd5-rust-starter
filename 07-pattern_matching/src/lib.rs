@@ -6,7 +6,10 @@ enum Event {
 }
 
 fn diagnose(event: Event) -> String {
-    String::from("")
+    match event {
+        Event::Mouse { x, y } => format!("Mouse({}, {})", x, y),
+        Event::Keyboard(keycode) => format!("Keycode: {}", keycode),
+    }
 }
 
 #[cfg(test)]
