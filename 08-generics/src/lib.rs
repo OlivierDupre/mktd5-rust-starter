@@ -1,5 +1,35 @@
 #![allow(dead_code)]
 
+use std::ops::Add;
+use std::fmt::Debug;
+
+#[derive(Debug, PartialEq)]
+struct Pair<A,B>(A, B);
+
+impl<A: Add<Output=A>, B: Add<Output=B>> Add for Pair<A, B> {
+    type Output = Self;
+    
+    fn add(self, that: Self) -> Self {
+        Pair(self.0 + that.0, self.1 + that.1)
+    }
+}
+
+trait Convert<E> {
+    fn convert(&self) -> E;
+}
+
+impl<A: Debug, B: Debug> Convert<String> for Pair<A,B> {
+    fn convert(&self) -> String {
+        format!("{{{:?};{:?}}}", self.0, self.1)
+    }
+}
+
+impl<A: Clone, B: Clone> Convert<(A,B)> for Pair<A,B> {
+    fn convert(&self) -> (A,B) {
+        (self.0.clone(), self.1.clone())
+    }
+}
+
 #[cfg(test)]
 mod pair_should {
     use super::*;
