@@ -1,5 +1,11 @@
 #![allow(dead_code)]
 
+fn insert_at_right_place(vec: &mut Vec<i64>, val: i64) {
+    if let Err(index) = vec.binary_search(&val) {
+        vec.insert(index, val);
+    }
+}
+
 #[cfg(test)]
 mod insert_at_right_place_should {
     use super::*;
@@ -38,6 +44,13 @@ mod insert_at_right_place_should {
         insert_at_right_place(&mut vec, 42);
         assert_eq!(vec![13, 21, 42, 314, 1337], vec);
     }
+}
+
+fn followed_by_sum(vec: Vec<u64>) -> Vec<(u64, u64)> {
+    vec.windows(3)
+       .filter(|t| t[0] + t[1] == t[2])
+       .map(|t| (t[0], t[1]))
+       .collect()
 }
 
 #[cfg(test)]
